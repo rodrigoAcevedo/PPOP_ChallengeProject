@@ -22,6 +22,7 @@ public class HexGrid : MonoBehaviour
 
     void CreateCell(int x, int z, int i, int type)
     {
+        Debug.Log("CreateCell x=" + x + "|z=" + z+"|i="+i);
         Vector3 position;
 
         position.x = (x + z * .5f - z / 2) * (HexMetrics.innerRadius * 2f);
@@ -29,11 +30,37 @@ public class HexGrid : MonoBehaviour
         // TODO: Explicar porque esta hardcodeado
         position.z = z * .744f;
 
-        Debug.Log("Cell type = " + type);
         HexCell cell = cells[i] = cellFactory.CreateNewHexCell(type);
         cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
+
+        // Seteamos a los neighbours de la cell
+        if (x > 0)
+        {
+            cell.SetNeighbour(HexDirection.W, cells[i - 1]);
+        }
+        if (z > 0)
+        {
+            // Primero verificamos las filas pares
+            if ((z & 1) == 0)
+            {
+                cell.SetNeighbour(HexDirection.SE, cells[i - width]);
+                // Si x > 0 significa que también tenemos una celda en la posición SW
+                if (x > 0)
+                {
+                    cell.SetNeighbour(HexDirection.SW, cells[i - width - 1]);
+                }
+            }
+            else // Hacemos lo mismo para las columnas impares, pero de forma espejada
+            {
+                cell.SetNeighbour(HexDirection.SW, cells[i - width]);
+                if (x < width - 1)
+                {
+                    cell.SetNeighbour(HexDirection.SE, cells[i - width + 1]);
+                }
+            }
+        }
     }
 
     void GenerateRandomGrid()

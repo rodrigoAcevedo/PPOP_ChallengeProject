@@ -99,8 +99,16 @@ MonoBehaviour:
     x: 0
     z: 0
   cellType: 0
-  hexMaterial: {fileID: 0}
+  neighbours:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   travelCost: 0
+  isNavigable: 0
+  isSelected: 0
 --- !u!64 &-3602751257378735251
 MeshCollider:
   m_ObjectHideFlags: 0

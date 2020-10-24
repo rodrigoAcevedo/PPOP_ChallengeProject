@@ -12,6 +12,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: f6bdf812cd880d849b0167cd2f5a78aa, type: 2}
     - target: {fileID: 1212705694189967945, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
+      propertyPath: neighbours.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1212705694189967945, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
       propertyPath: cellType
       value: 2
       objectReference: {fileID: 0}
@@ -22,6 +26,10 @@ PrefabInstance:
     - target: {fileID: 1212705694189967945, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
       propertyPath: travelCost
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1212705694189967945, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
+      propertyPath: isNavigable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1684025315614277024, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -69,7 +77,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2023537586404091674, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
       propertyPath: m_Name
-      value: Desert
+      value: Desert Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
