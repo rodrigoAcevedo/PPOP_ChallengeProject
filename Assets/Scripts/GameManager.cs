@@ -52,11 +52,11 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                ResetPath();
                 beginCell.Unselect();
                 beginCell = endCell;
                 endCell = selectedCell;
                 endCell.Select();
+                ResetPath();
             }
 
             if (beginCell != null && endCell != null)
@@ -87,7 +87,10 @@ public class GameManager : MonoBehaviour
         foreach (IAStarNode cellNode in cellPaths)
         {
             HexCell cell = cellNode as HexCell;
-            cell.SetToDefault();
+
+            // Si es uno que seleccionamos no queremos revertirlo
+            if(!cell.isSelected)
+                cell.SetToDefault();
         }
     }
 }
