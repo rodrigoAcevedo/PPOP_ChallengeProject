@@ -22,7 +22,6 @@ public class HexGrid : MonoBehaviour
 
     void CreateCell(int x, int z, int i, int type)
     {
-        Debug.Log("CreateCell x=" + x + "|z=" + z+"|i="+i);
         Vector3 position;
 
         position.x = (x + z * .5f - z / 2) * (HexMetrics.innerRadius * 2f);

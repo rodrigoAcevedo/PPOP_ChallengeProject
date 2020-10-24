@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PathFinding;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
@@ -8,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     HexCell beginCell;
     HexCell endCell;
+
+    IList<IAStarNode> cellPaths;
 
     // Update is called once per frame
     void Update()
@@ -49,6 +52,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                ResetPath();
                 beginCell.Unselect();
                 beginCell = endCell;
                 endCell = selectedCell;
@@ -62,11 +66,28 @@ public class GameManager : MonoBehaviour
 
     void FindPath()
     {
-        // TODO: Buscar el camino
+        IAStarNode beginNode = beginCell as IAStarNode;
+        IAStarNode endNode = endCell as IAStarNode;
+
+        cellPaths = AStar.GetPath(beginNode, endNode);
+
+        foreach (IAStarNode cellNode in cellPaths)
+        {
+            // Ignoramos los nodos de inicio y fin.
+            if (cellNode != beginNode && cellNode != endNode)
+            {
+                HexCell cell = cellNode as HexCell;
+                cell.SelectAsPath();
+            }
+        }
     }
 
     void ResetPath()
     {
-        // TODO: Resetear el camino
+        foreach (IAStarNode cellNode in cellPaths)
+        {
+            HexCell cell = cellNode as HexCell;
+            cell.SetToDefault();
+        }
     }
 }
