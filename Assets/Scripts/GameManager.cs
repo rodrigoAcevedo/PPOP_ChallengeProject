@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         GameObject selectedGameObject = hit.transform.gameObject;
         HexCell selectedCell = selectedGameObject.GetComponent<HexCell>();
 
-        if (selectedCell.isNavigable && !selectedCell.isSelected)
+        if (selectedCell.isNavigable)
         {
             if (beginCell == null)
             {
@@ -54,17 +54,16 @@ public class GameManager : MonoBehaviour
 
             if (endCell == null)
             {
+                // No queremos seleccionar la misma celda y construir un camino.
+                if (selectedCell == beginCell)
+                    return;
+
                 endCell = selectedCell;
                 endCell.Select();
             }
             // else
             else if (hasDrawnPath)
             {
-                // Deseleccionamos las actuales referencias a celdas y reseteamos el camino.
-                beginCell.Unselect();
-                endCell.Unselect();
-                beginCell = null;
-                endCell = null;
                 ResetPath();
 
                 // Volvemos a llamar al mismo método para volver a empezar.
@@ -98,11 +97,18 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
         hasDrawnPath = true;
     }
 
+    // Deseleccionamos las actuales referencias a celdas y reseteamos el camino.
     void ResetPath()
     {
+        beginCell.Unselect();
+        endCell.Unselect();
+        beginCell = null;
+        endCell = null;
+
         if (cellPaths != null)
         {
             foreach (IAStarNode cellNode in cellPaths)
@@ -114,7 +120,7 @@ public class GameManager : MonoBehaviour
                     cell.SetToDefault();
             }
         }
-        
+
         hasDrawnPath = false;
     }
 }
