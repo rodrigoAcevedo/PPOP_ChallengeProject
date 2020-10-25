@@ -13,7 +13,7 @@ public class HexGrid : MonoBehaviour
     public HexCellFactory cellFactory;
 
     HexCell[] cells;
-    void Awake()
+    void Start()
     {
         cells = new HexCell[height * width];
 

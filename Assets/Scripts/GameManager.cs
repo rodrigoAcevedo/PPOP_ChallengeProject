@@ -12,10 +12,17 @@ public class GameManager : MonoBehaviour
 
     IList<IAStarNode> cellPaths;
 
+    bool hasDrawnPath;
+
+    private void Awake()
+    {
+        hasDrawnPath = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             HandleInput();
         }
@@ -50,17 +57,25 @@ public class GameManager : MonoBehaviour
                 endCell = selectedCell;
                 endCell.Select();
             }
-            else
+            // else
+            else if (hasDrawnPath)
             {
+                // Deseleccionamos las actuales referencias a celdas y reseteamos el camino.
                 beginCell.Unselect();
-                beginCell = endCell;
-                endCell = selectedCell;
-                endCell.Select();
+                endCell.Unselect();
+                beginCell = null;
+                endCell = null;
                 ResetPath();
+
+                // Volvemos a llamar al mismo método para volver a empezar.
+                SelectCell(hit);
             }
 
             if (beginCell != null && endCell != null)
+            {
                 FindPath();
+            }
+                
         }
     }
 
@@ -71,26 +86,35 @@ public class GameManager : MonoBehaviour
 
         cellPaths = AStar.GetPath(beginNode, endNode);
 
-        foreach (IAStarNode cellNode in cellPaths)
+        if (cellPaths != null)
         {
-            // Ignoramos los nodos de inicio y fin.
-            if (cellNode != beginNode && cellNode != endNode)
+            foreach (IAStarNode cellNode in cellPaths)
             {
-                HexCell cell = cellNode as HexCell;
-                cell.SelectAsPath();
+                // Ignoramos los nodos de inicio y fin.
+                if (cellNode != beginNode && cellNode != endNode)
+                {
+                    HexCell cell = cellNode as HexCell;
+                    cell.SelectAsPath();
+                }
             }
         }
+        hasDrawnPath = true;
     }
 
     void ResetPath()
     {
-        foreach (IAStarNode cellNode in cellPaths)
+        if (cellPaths != null)
         {
-            HexCell cell = cellNode as HexCell;
+            foreach (IAStarNode cellNode in cellPaths)
+            {
+                HexCell cell = cellNode as HexCell;
 
-            // Si es uno que seleccionamos no queremos revertirlo
-            if(!cell.isSelected)
-                cell.SetToDefault();
+                // Si es uno que seleccionamos no queremos revertirlo
+                if (!cell.isSelected)
+                    cell.SetToDefault();
+            }
         }
+        
+        hasDrawnPath = false;
     }
 }

@@ -23,7 +23,6 @@ public class HexCellFactory : MonoBehaviour
     public HexCell CreateNewHexCell(int type)
     {
         HexCell newCell;
-
         if (hexCellDictionary.TryGetValue(type, out newCell))
         {
             return Instantiate(newCell);
