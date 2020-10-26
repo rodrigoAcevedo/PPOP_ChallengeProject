@@ -8,6 +8,9 @@ public class HexGrid : MonoBehaviour
     public int width = 8;
     public int height = 8;
 
+    public bool randomize;
+    public JSONReader jsonReader;
+
     public HexCell cellPrefab;
 
     public HexCellFactory cellFactory;
@@ -16,8 +19,19 @@ public class HexGrid : MonoBehaviour
     void Start()
     {
         cells = new HexCell[height * width];
+        GenerateGrid();
+    }
 
-        GenerateRandomGrid();
+    public void GenerateGrid()
+    {
+        if (randomize)
+        {
+            GenerateRandomGrid();
+        }
+        else
+        {
+            GenerateGridFromJSON();
+        }
     }
 
     void CreateCell(int x, int z, int i, int type)
@@ -69,6 +83,24 @@ public class HexGrid : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int cellType = Random.Range(0, 5);
+                CreateCell(x, z, i++, cellType);
+            }
+        }
+    }
+
+    void GenerateGridFromJSON()
+    {
+        string gridInfoText = jsonReader.jsonFile.text;
+        GridInfo gridInfo = jsonReader.GetGridInfoFromJSON<GridInfo>(gridInfoText);
+
+        height = gridInfo.cellMap.Count;
+        width = gridInfo.cellMap[0].rowCells.Count;
+
+        for (int z = 0, i = 0; z < height; z++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int cellType = gridInfo.cellMap[z].rowCells[x].cellType;
                 CreateCell(x, z, i++, cellType);
             }
         }

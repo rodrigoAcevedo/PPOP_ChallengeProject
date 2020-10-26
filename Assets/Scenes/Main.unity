@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: 1778264416}
   - component: {fileID: 1778264415}
   - component: {fileID: 1778264417}
+  - component: {fileID: 1778264418}
   m_Layer: 0
   m_Name: Hex Grid
   m_TagString: Untagged
@@ -373,6 +374,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 8
   height: 8
+  randomize: 1
+  jsonReader: {fileID: 1778264418}
   cellPrefab: {fileID: 1212705694189967945, guid: 2f9f68a9ad9e71544b2074cb3d38298b, type: 3}
   cellFactory: {fileID: 1778264417}
 --- !u!4 &1778264416
@@ -407,3 +410,16 @@ MonoBehaviour:
   - {fileID: 7013277715573152976, guid: cb4e49eae31480040a727ec2ad8b7a32, type: 3}
   - {fileID: 8320738809355864599, guid: 1de63bb4ba20f934eb969fd695630ea0, type: 3}
   - {fileID: 2945526835702554633, guid: 324d20e9b248b0d4d92c75d52a1d844e, type: 3}
+--- !u!114 &1778264418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778264414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f80b17b8755576409cc5dbf5f6b86ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jsonFile: {fileID: 4900000, guid: 4cc3b1f39ecbc474b9965f06c4c7d161, type: 3}
